@@ -11,7 +11,7 @@ All coding portions should go in `main.py` as usual.
 
 In class we looked at the Huffman coding algorithm for data
 compresssion. Let's implement the algorithm and look at its empirical
-performance on a dataset of 5 text files. 
+performance on a dataset of 5 text files (`alice29.txt`, `asyoulik.txt`, `f1.txt`, `fields.c`, `grammar.lsp`). 
 
 **1a)** We have implemented a means to compute character frequencies
   in a text file with the function `get_frequencies` in
