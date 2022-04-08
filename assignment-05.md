@@ -7,50 +7,7 @@ In this assignment we'll look at the greedy and dynamic programming paradigms.
 All coding portions should go in `main.py` as usual.
 
 
-## Part 1: Fixed-Length vs. Variable-Length Codes
-
-In class we looked at the Huffman coding algorithm for data
-compresssion. Let's implement the algorithm and look at its empirical
-performance on a dataset of 5 text files (`alice29.txt`, `asyoulik.txt`, `f1.txt`, `fields.c`, `grammar.lsp`). 
-
-**1a)** We have implemented a means to compute character frequencies
-  in a text file with the function `get_frequencies` in
-  `main.py`. Compute cost for a fixed length encoding for each text
-  file.
-
-**1b)** Complete the implementation of Huffman coding in
-  `make_huffman_tree`. Note that we manipulate binary trees in the
-  priority queue using the object `TreeNode`. Moreover, once the tree
-  is constructed, we must compute the actual encodings by traversing
-  the Huffman tree that has been constructed. To do this, complete the
-  implementation of `get_code`, which is a typical recursive binary
-  tree traversal. That is, given a tree node, we recursively visit the
-  left and right subtrees, appending a `0` or `1` to the encoding in
-  each direction as appropriate. If we visit a leaf of the tree (which
-  represents a character in the alphabet) we store the
-  collected encoding for that character in `code`.
-
-**1c)** Now implement `huffman_cost` to compute the cost of a Huffman
-  encoding for a character set with given frequencies.
-
-**1d)** Test your implementation of Huffman coding on the 5 given text
-files, and fill out a table of the encoding cost of each file for
-fixed-length and Huffman. Fill out a final column which gives the
-ratio of Huffman coding cost to fixed-length coding cost. Do you see a
-consistent trend? If so, what is it?
-
-**enter answer in `answers.md`**
-
-
-**1d)** Suppose that we used Huffman coding on a document with alphabet $\Sigma$ in
-  which every character had the same frequency. What is the expected
-  cost of a Huffman encoding for the document? Is it consistent across
-  documents?
-
-**enter answer in `answers.md`**
-
-
-## Part 2: Making Change
+## Part 1: Making Change
 
 The pandemic is over and you decide to take a much needed vacation. You arrive in a city called Geometrica, and head to the bank to
 exchange $N$ dollars for local currency. In Geometrica they have a
@@ -62,24 +19,24 @@ such strange denominations. You think about it a while, and because
 you had such a good Algorithms instructor, you realize that there is a
 very clever reason. 
 
-**2a)** Given a $N$ dollars, state a greedy algorithm for producing
+**1a)** Given a $N$ dollars, state a greedy algorithm for producing
 as few coins as possible that sum to $N$.
 
 **enter answer in `answers.md`**
 
 
-**2b)** Prove that this algorithm is optimal by proving the greedy
+**1b)** Prove that this algorithm is optimal by proving the greedy
   choice and optimal substructure properties.
 
 **enter answer in `answers.md`**
 
 
-**2c)** What is the work and span of your algorithm?
+**1c)** What is the work and span of your algorithm?
 
 **enter answer in `answers.md`**
 
 
-## Part 3: Making Change Again
+## Part 2: Making Change Again
 
 You get tired of Geometrica and travel to the nearby town of
 Fortuito. While Fortuito also has a 1-1 exchange rate to the US
@@ -113,7 +70,7 @@ possible?
 **enter answer in `answers.md`**
 
 
-## Part 4: Edit Distance
+## Part 3: Edit Distance
 
 In class we proved an optimal substructure property for the **Edit
 Distance** problem. This allowed us to implement a simple recursive
@@ -123,7 +80,7 @@ substitutions, develop a top-down memoization scheme
 and then implement a way to visualize the optimal sequence of edits.
 
 
-**4a)** The code for `MED` from the lecture notes is provided as a
+**3a)** The code for `MED` from the lecture notes is provided as a
   starting point in `main.py.` We will consider a slightly different
   version of the edit distance problem which allows for insertions,
   deletions and substitutions. We will assume that insertions,
@@ -131,11 +88,11 @@ and then implement a way to visualize the optimal sequence of edits.
   for this version of the edit distance problem and modify `MED` accordingly. 
 
 
-**4b)** Now implement `fast_MED`, a **top-down**
+**3b)** Now implement `fast_MED`, a **top-down**
   memoized version of `MED`. Test your implementation code using `test_MED`.
 
 
-**4c)** Now that you have implemented an efficient algorithm for
+**3c)** Now that you have implemented an efficient algorithm for
   computing edit distance, let's turn to the problem of identifying
   the actual edits between two sequences.
 
