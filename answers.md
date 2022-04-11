@@ -15,8 +15,6 @@ Place all written answers from `assignment-05.md` here for easier grading.
 
 
 
-- **1b.**
-
 
 
 
@@ -24,5 +22,3 @@ Place all written answers from `assignment-05.md` here for easier grading.
 
 
 
-
-- **2c.**
