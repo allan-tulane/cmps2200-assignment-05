@@ -1,5 +1,5 @@
 
-####### Problem 4 #######
+####### Problem 3 #######
 
 test_cases = [('book', 'back'), ('kookaburra', 'kookybird'), ('elephant', 'relevant'), ('AAAGAATTCA', 'AAATCA')]
 alignments = [('book', 'back'), ('kookaburra', 'kookybird-'), ('relev-ant','-elephant'), ('AAAGAATTCA', 'AAA---T-CA')]
@@ -18,7 +18,7 @@ def MED(S, T):
 
 
 def fast_MED(S, T, MED={}):
-    # TODO -  implement top-down memoization
+    # TODO -  implement memoization
     pass
 
 def fast_align_MED(S, T, MED={}):

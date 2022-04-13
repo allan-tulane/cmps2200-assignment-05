@@ -64,7 +64,7 @@ In class we proved an optimal substructure property for the **Edit
 Distance** problem. This allowed us to implement a simple recursive
 algorithm in Python that was horribly inefficient. We're going to
 implement a slightly different version of edit distance that includes
-substitutions, develop a top-down memoization scheme
+substitutions, develop an efficient memoization scheme
 and then implement a way to visualize the optimal sequence of edits.
 
 
@@ -76,8 +76,7 @@ and then implement a way to visualize the optimal sequence of edits.
   for this version of the edit distance problem and modify `MED` accordingly. 
 
 
-**3b)** Now implement `fast_MED`, a **top-down**
-  memoized version of `MED`. Test your implementation code using `test_MED`.
+**3b)** Now implement `fast_MED`, a memoized version of `MED`. Test your implementation code using `test_MED`.
 
 
 **3c)** Now that you have implemented an efficient algorithm for
