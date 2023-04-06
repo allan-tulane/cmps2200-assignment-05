@@ -1,36 +1,60 @@
+from collections import defaultdict
 
-####### Problem 3 #######
-
-test_cases = [('book', 'back'), ('kookaburra', 'kookybird'), ('elephant', 'relevant'), ('AAAGAATTCA', 'AAATCA')]
-alignments = [('book', 'back'), ('kookaburra', 'kookybird-'), ('relev-ant','-elephant'), ('AAAGAATTCA', 'AAA---T-CA')]
-
-def MED(S, T):
-    # TO DO - modify to account for insertions, deletions and substitutions
-    if (S == ""):
-        return(len(T))
-    elif (T == ""):
-        return(len(S))
-    else:
-        if (S[0] == T[0]):
-            return(MED(S[1:], T[1:]))
-        else:
-            return(1 + min(MED(S, T[1:]), MED(S[1:], T)))
+def make_undirected_graph(edge_list):
+    """ Makes an undirected graph from a list of edge tuples. """
+    graph = defaultdict(set)
+    for e in edge_list:
+        graph[e[0]].add(e[1])
+        graph[e[1]].add(e[0])
+    return graph
 
 
-def fast_MED(S, T, MED={}):
-    # TODO -  implement memoization
+def reachable(graph, start_node):
+    """
+    Returns:
+      the set of nodes reachable from start_node
+    """
+    result = set([start_node])
+    frontier = set([start_node])
+    while len(frontier) != 0:
+        ###TODO
+        pass
+    return result
+
+def test_reachable():
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
+    assert sorted(reachable(graph, 'A')) == ['A', 'B', 'C', 'D']
+
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
+    assert sorted(reachable(graph, 'A')) == ['A', 'B', 'C', 'D']
+    assert sorted(reachable(graph, 'E')) == ['E', 'F', 'G']
+
+
+
+
+def connected(graph):
+    ### TODO
     pass
 
-def fast_align_MED(S, T, MED={}):
-    # TODO - keep track of alignment
+def test_connected():
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
+    assert connected(graph) == True
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
+    assert connected(graph) == False
+
+
+
+def n_components(graph):
+    """
+    Returns:
+      the number of connected components in an undirected graph
+    """
+    ### TODO
     pass
 
-def test_MED():
-    for S, T in test_cases:
-        assert fast_MED(S, T) == MED(S, T)
-                                 
-def test_align():
-    for i in range(len(test_cases)):
-        S, T = test_cases[i]
-        align_S, align_T = fast_align_MED(S, T)
-        assert (align_S == alignments[i][0] and align_T == alignments[i][1])
+def test_n_components():
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
+    assert n_components(graph) == 1
+
+    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
+    assert n_components(graph) == 2

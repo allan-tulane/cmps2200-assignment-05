@@ -58,45 +58,40 @@ possible?
 **enter answer in `answers.md`**
 
 
-## Part 3: Edit Distance
 
-In class we proved an optimal substructure property for the **Edit
-Distance** problem. This allowed us to implement a simple recursive
-algorithm in Python that was horribly inefficient. We're going to
-implement a slightly different version of edit distance that includes
-substitutions, develop an efficient memoization scheme
-and then implement a way to visualize the optimal sequence of edits.
+## Part 3: Reachable Graph
 
+**3a)** Let's assume we're using the "Map of Neighbors" representation for undirected graphs. The provided `make_undirected_graph` function will make a graph using this representation given a list of edge tuples. 
 
-**3a)** The code for `MED` from the lecture notes is provided as a
-  starting point in `main.py.` We will consider a slightly different
-  version of the edit distance problem which allows for insertions,
-  deletions and substitutions. We will assume that insertions,
-  deletions and substitutions all have the same unit cost. State the optimal substructure property
-  for this version of the edit distance problem and modify `MED` accordingly. 
+We'll start by implementing the `reachable` function, which identifies the set of nodes that are reachable from a given `start_node`.
 
+As discussed in lecture, we'll maintain a set called `frontier` that keeps track of which nodes we will visit next. We initialize the set to be the start node. We then perform a loop where we pop a single node off the frontier, visit its neighbors, and update the `result` and `frontier` sets appropriately. At the end of the loop, `result` should contain all the nodes that are reachable from `start_node`.
 
-**3b)** Now implement `fast_MED`, a memoized version of `MED`. Test your implementation code using `test_MED`.
+Complete the `reachable` implementation and test with `test_reachable`. Think about how to make this efficient and ensure we don't revisit nodes unnecessarily.
+
+.  
+.  
+.  
+.  
+.  
+.  
 
 
-**3c)** Now that you have implemented an efficient algorithm for
-  computing edit distance, let's turn to the problem of identifying
-  the actual edits between two sequences.
 
- Notice that in the process of computing the optimal edit
-  distance, we can also keep track of the actual sequence of edits to
-  each position of $S$ and $T$. Update your implementation of `fast_MED` to
-  return the optimal edit distance as well as an *alignment* of the
-  two strings which show the edits that yield this distance. An
-  alignment just shows what changes are made to $S$ to transform it to
-  $T$. For example, suppose $S$=`relevant` and $T$=`elephant`. If
-  insertion, deletion and substitution costs are all equal to $1$, then the
-  edit distance between $S$ and $T$ is 3 and an
-  alignment of these two strings would look like this:
 
-  `relev-ant`\
-  `-elephant`
+**3b)** Next, we will use the `reachable` function to determine if a graph is connected or not. Complete the `connected` function and test with `test_connected`.
 
-Implement `fast_align_MED` to return the aligned versions of $S$ and $T$,
-and test your code with `test_alignment`.
+.  
+.  
+.  
+.  
+
+
+.  
+.  
+
+**3c)** Next, we'll use `reachable` to determine the number of connected components in a graph. Complete `n_components` and test with `test_n_components`. Again, think about how to minimize the number of calles to `reachable` you must make.
+
+.  
+.  
 

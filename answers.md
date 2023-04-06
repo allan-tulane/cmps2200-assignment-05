@@ -22,3 +22,22 @@ Place all written answers from `assignment-05.md` here for easier grading.
 
 
 
+
+- **3a.**
+
+
+
+
+
+
+- **3b.**
+
+
+
+
+
+
+- **3c.**
+
+
+
