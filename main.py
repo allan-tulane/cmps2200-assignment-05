@@ -1,60 +1,74 @@
-from collections import defaultdict
+from collections import deque
+from heapq import heappush, heappop 
 
-def make_undirected_graph(edge_list):
-    """ Makes an undirected graph from a list of edge tuples. """
-    graph = defaultdict(set)
-    for e in edge_list:
-        graph[e[0]].add(e[1])
-        graph[e[1]].add(e[0])
-    return graph
-
-
-def reachable(graph, start_node):
+def shortest_shortest_path(graph, source):
     """
+    Params: 
+      graph.....a graph represented as a dict where each key is a vertex
+                and the value is a set of (vertex, weight) tuples (as in the test case)
+      source....the source node
+      
     Returns:
-      the set of nodes reachable from start_node
-    """
-    result = set([start_node])
-    frontier = set([start_node])
-    while len(frontier) != 0:
-        ###TODO
-        pass
-    return result
-
-def test_reachable():
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
-    assert sorted(reachable(graph, 'A')) == ['A', 'B', 'C', 'D']
-
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
-    assert sorted(reachable(graph, 'A')) == ['A', 'B', 'C', 'D']
-    assert sorted(reachable(graph, 'E')) == ['E', 'F', 'G']
-
-
-
-
-def connected(graph):
-    ### TODO
-    pass
-
-def test_connected():
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
-    assert connected(graph) == True
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
-    assert connected(graph) == False
-
-
-
-def n_components(graph):
-    """
-    Returns:
-      the number of connected components in an undirected graph
+      a dict where each key is a vertex and the value is a tuple of
+      (shortest path weight, shortest path number of edges). See test case for example.
     """
     ### TODO
     pass
+    
+def test_shortest_shortest_path():
 
-def test_n_components():
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B')])
-    assert n_components(graph) == 1
+    graph = {
+                's': {('a', 1), ('c', 4)},
+                'a': {('b', 2)}, # 'a': {'b'},
+                'b': {('c', 1), ('d', 4)}, 
+                'c': {('d', 3)},
+                'd': {},
+                'e': {('d', 0)}
+            }
+    result = shortest_shortest_path(graph, 's')
+    # result has both the weight and number of edges in the shortest shortest path
+    assert result['s'] == (0,0)
+    assert result['a'] == (1,1)
+    assert result['b'] == (3,2)
+    assert result['c'] == (4,1)
+    assert result['d'] == (7,2)
+    
+    
+def bfs_path(graph, source):
+    """
+    Returns:
+      a dict where each key is a vertex and the value is the parent of 
+      that vertex in the shortest path tree.
+    """
+    ###TODO
+    pass
 
-    graph = make_undirected_graph([('A', 'B'), ('B', 'C'), ('C', 'D'), ('D', 'B'), ('E', 'F'), ('F', 'G')])
-    assert n_components(graph) == 2
+def get_sample_graph():
+     return {'s': {'a', 'b'},
+            'a': {'b'},
+            'b': {'c'},
+            'c': {'a', 'd'},
+            'd': {}
+            }
+
+def test_bfs_path():
+    graph = get_sample_graph()
+    parents = bfs_path(graph, 's')
+    assert parents['a'] == 's'
+    assert parents['b'] == 's'    
+    assert parents['c'] == 'b'
+    assert parents['d'] == 'c'
+    
+def get_path(parents, destination):
+    """
+    Returns:
+      The shortest path from the source node to this destination node 
+      (excluding the destination node itself). See test_get_path for an example.
+    """
+    ###TODO
+    pass
+
+def test_get_path():
+    graph = get_sample_graph()
+    parents = bfs_path(graph, 's')
+    assert get_path(parents, 'd') == 'sbc'

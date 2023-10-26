@@ -1,87 +1,17 @@
-# CMPS 2200 Assignment 5
+## 1. Shortest shortest paths
 
-In this assignment we'll look at the greedy and dynamic programming paradigms.
+a) Suppose we are given a a directed, **weighted** graph $G=(V,E)$ with only positive edge weights. For a source vertex $s$, design an algorithm to find the shortest path from $s$ to all other vertices with the fewest number of edges. That is, if there are multiple paths with the same total edge weight, output the one with the fewest number of edges.
 
-**To make grading easier, please place all written solutions directly in `answers.md`, rather than scanning in handwritten work or editing this file.**
-
-All coding portions should go in `main.py` as usual.
-
-
-## Part 1: Making Change
-
-The pandemic is over and you decide to take a much needed vacation. You arrive in a city called Geometrica, and head to the bank to
-exchange $N$ dollars for local currency. In Geometrica they have a
-currency that is 1-1 with U.S. Dollars, but they only have
-coins. Moreover the coins are in
-denominations of powers of $2$ (e.g., $k$ denominations of values $2^0$, $2^1$, \ldots,
-$2^k$). You wonder why they have
-such strange denominations. You think about it a while, and because
-you had such a good Algorithms instructor, you realize that there is a
-very clever reason. 
-
-**1a)** Given a $N$ dollars, state a greedy algorithm for producing
-as few coins as possible that sum to $N$. Please discuss if this algorithm is optimal or not.
-
-**enter answer in `answers.md`**
-
-
-
-**1b)** What is the work and span of your algorithm?
-
-**enter answer in `answers.md`**
-
-
-## Part 2: Making Change Again
-
-You get tired of Geometrica and travel to the nearby town of
-Fortuito. While Fortuito also has a 1-1 exchange rate to the US
-Dollar, it has an even stranger system of currency where any given bank
-has a completely arbitrary set of denominations ($k$ denominations of
-values $D_0, D_2, \ldots, D_k$). There is no guarantee that you can
-even make change. So you wonder, given $N$ dollars is it possible to
-even make change? If so, how can it be done with as few coins as
-possible?
-
-**2a)** You realize the greedy algorithm you devised above doesn't
-  work in Fortuito. Give a simple counterexample that shows that the
-  greedy algorithm does not produce the fewest number of coins. Please discuss why greedy algorithm cannot work optionally. 
-  
-**enter answer in `answers.md`**
-
-
-
-**2b)** Use this optimal substructure property to design a
-  dynamic programming algorithm for this problem. If you used top-down
-  or bottom-up memoization to avoid recomputing solutions to
-  subproblems, what is the work and span of your approach?
-
-**enter answer in `answers.md`**
-
-
-
-## Part 3: Reachable Graph
-
-**3a)** Let's assume we're using the "Map of Neighbors" representation for undirected graphs. The provided `make_undirected_graph` function will make a graph using this representation given a list of edge tuples. 
-
-We'll start by implementing the `reachable` function, which identifies the set of nodes that are reachable from a given `start_node`.
-
-As discussed in lecture, we'll maintain a set called `frontier` that keeps track of which nodes we will visit next. We initialize the set to be the start node. We then perform a loop where we pop a single node off the frontier, visit its neighbors, and update the `result` and `frontier` sets appropriately. At the end of the loop, `result` should contain all the nodes that are reachable from `start_node`.
-
-Complete the `reachable` implementation and test with `test_reachable`. Think about how to make this efficient and ensure we don't revisit nodes unnecessarily.
+Complete the function `shortest_shortest_path` and test with the example graph given in `test_shortest_shortest_path`. Note that the `shortest_shortest_path` function returns both the weight and the number of edges of each shortest path.
 
 .  
 .  
 .  
-.  
-.  
-.  
 
+b) What is the work and span of your algorithm? 
 
+**put in answers.md**
 
-
-**3b)** Next, we will use the `reachable` function to determine if a graph is connected or not. Complete the `connected` function and test with `test_connected`.
-
-.  
 .  
 .  
 .  
@@ -89,9 +19,210 @@ Complete the `reachable` implementation and test with `test_reachable`. Think ab
 
 .  
 .  
+.  
 
-**3c)** Next, we'll use `reachable` to determine the number of connected components in a graph. Complete `n_components` and test with `test_n_components`. Again, think about how to minimize the number of calles to `reachable` you must make.
+## 2. Computing paths
 
+a) We have seen how to run breadth-first search while keeping track of the distance of each node to the source. Let's now keep track of the actual shortest path from the source to each node. First, observe that the order in which BFS visits nodes implies a tree over the graph:
+
+![bfs.png](bfs.png)
+
+Here, the dark edges indicate all the shortest paths discovered by BFS. To keep track of the paths, then, we just need to represent this tree. To do so, we can store a `dict` from a vertex to its parent in the tree. In the above example, this would be:
+
+```python
+{'a': 's', 'b': 's', 'c': 'b', 'd': 'c'}
+```
+
+Complete the `bfs_path` function to return this parent `dict` and test it with `test_bfs_path`. Your algorithm should not increase the asymptotic work/span of BFS.
+
+b) Next, complete `get_path`, which takes in the parent `dict` and a node, and returns a string indicating the path from the source node to the destination node. Test with `test_get_path`.
+
+
+## 3. Improving Dijkstra
+
+In our analysis of the work done by Dijkstra's algorithm, we ended up
+with a bound of $O(|E|\log |E|)$. Let's take a closer look at how
+changing the type of heap used affects this work bound.
+
+a) A $d$-ary heap is a generalization of a binary heap in which we
+have a $d$-ary tree as the data structure. The heap and shape
+properties are still maintained, but each internal node now has $d$
+children (except possibly the rightmost leaf). What is the maximum
+depth of a $d$-ary heap?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+
+b) In a binary heap the `delete-min` operation removes the root,
+places the rightmost leaf at the root position and restores the heap
+property by swapping downward. Similarly the `insert` operation places
+the new element as the rightmost leaf and swaps upward to restore the
+heap property. What is the work done by
+`delete-min` and `insert` operations in a $d$-ary heap? Note that the
+work differs for each operation. 
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+c) Now, suppose we use a $d$-ary heap for Dijkstra's algorithm. What is the
+new bound on the work? Your bound will be a function of
+$|V|$, $|E|$, and $d$ and will account for the `delete-min` and
+`insert` operations separately.
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+d) Now that we have a characterization of how Dijkstra's algorithm
+performs with a $d$-ary heap, let's look at how we might be able to
+optimize the choice of $d$ under certain assumptions. Let's suppose
+that we have a moderate number of edges, that is  $|E| = |V|^{1+\epsilon}$ for $0<\epsilon
+< 1$. What value of $d$ yields an overall running time of $O(|E|)$?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+## 4. All-pairs shortest paths using Dynamic Programming
+
+In class we looked at the all-pairs shortest path (APSP) problem, and
+used a graph transformation so that we could essentially run Dijkstra
+with all possible starting source vertices. This resulted in an
+algorithm for APSP with work $O(|V||E|\log |E|).$ Let's consider
+a more direct approach using dynamic programming.
+
+Suppose that we label the vertices from $0$ to $n-1$, and let
+$\mathit{APSP}(i, j, k)$ be the weight of the shortest path between vertices $i$ and $j$
+such that only vertices $0, 1, \ldots, k$ are allowed to be used. Then
+the cost of the shortest path between vertices $i$ and $j$ is then
+given by $\mathit{APSP}(i, j, n-1).$
+
+a) Consider the following graph with 3 vertices.
+
+![apsp_example.jpg](apsp_example.jpg)
+
+Compute $\mathit{APSP}(i, j, k)$ for all $i, j, k$.
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+b) Do you see a relationship between $\mathit{APSP}(i, j, 1)$ and
+$\mathit{APS}(i, j, 2)$? Can you write $\mathit{APS}(i, j, 2)$ in
+terms of $\mathit{APS}(i, j, 0)$ and $\mathit{APS}(i, j, 1)$ only?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+
+c) Suppose that an oracles makes available to us all possible values
+for $\mathit{APSP}(i, j, k-1)$ for all $i, j$ and some particular value
+of $k-1<n$. Then what is the shortest path cost $\mathit{APSP}(i,
+j, k)$? Well, it is either $\mathit{APSP}(i,
+j, k-1)$, or some other path from $i$ to $j$ that has length
+$k$. Generalize your observation from b) above to give an optimal substructure property for
+$\mathit{APSP}(i, j, k).$
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+d) As usual naively implementing this optimal substructure
+property to compute $\mathit{APSP}(i, j, n-1)$ for all $i, j$ will be
+inefficient. Suppose we perform top-down memoization so that we only
+ever compute each subproblem from scratch once. How many distinct
+subproblems will be computed from scratch, and what is the resulting
+work of this dynamic programming algorithm?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+e) Compare the work of this algorithm against that of Johnson's
+algorithm. In what cases is our dynamic programming algorithm
+preferable?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+
+
+## 5. Spanning trees
+
+a) Consider a variation of the MST problem that instead asks for a tree that minimizes the maximum weight of any edge in the spanning tree. Let's call this the minimum maximum edge tree (MMET). Is a solution to MST guaranteed to be a solution to MMET? Why or why not?
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+b) Suppose that the optimal solution to MST is impossible to use for some reason. Describe an algorithm to instead find the next best tree (pseudo-code or English is fine). That is, return the tree with the next lowest weight. 
+
+
+**put in answers.md**
+
+.  
+.  
+.  
+
+
+c) What is the work of your algorithm?
+
+
+**put in answers.md**
+
+.  
 .  
 .  
 

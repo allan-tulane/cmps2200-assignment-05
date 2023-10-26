@@ -4,21 +4,10 @@
 **Name:**_________________________
 
 
-Place all written answers from `assignment-05.md` here for easier grading.
 
 
 
-
-
-- **1a.**
-
-
-
-
-
-
-
-- **2b.**
+- **1b.**
 
 
 
@@ -26,18 +15,32 @@ Place all written answers from `assignment-05.md` here for easier grading.
 - **3a.**
 
 
-
-
-
-
 - **3b.**
-
-
-
-
 
 
 - **3c.**
 
+- **3d.**
 
 
+- **4a.**
+
+
+- **4b.**
+
+
+- **4c.**
+
+- **4d.**
+
+- **4e.**
+
+
+
+- **5a.**
+
+
+- **5b.**
+
+
+- **5c.**
